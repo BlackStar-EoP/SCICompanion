@@ -27,7 +27,7 @@
 // The numbers here are important, they map to the
 // actual values that SCI uses, and are used for array lookups.
 //
-enum class ResourceType
+enum class ResourceType : int32_t
 {
     None = -1,
     View = 0,
@@ -537,7 +537,7 @@ void movefile(const std::string &from, const std::string &to);
 void testopenforwrite(const std::string &filename);
 uint32_t GetResourceOffsetInFile(uint8_t secondHeaderByte);
 extern const TCHAR g_szResourceSpec[];
-extern const TCHAR* g_szResourceSpecByType[ResourceType::Max];
+extern const TCHAR* g_szResourceSpecByType[(uint32_t)ResourceType::Max];
 std::string GetMessageFromLastError(const std::string &details);
 void ToUpper(std::string &aString);
 bool IsCodeFile(const std::string &text);

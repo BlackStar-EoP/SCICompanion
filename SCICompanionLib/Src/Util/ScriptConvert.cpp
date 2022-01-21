@@ -24,12 +24,11 @@
 #include "ResourceMap.h"
 #include "CompiledScript.h"
 #include <regex>
+#include <filesystem>
 
+using namespace std::filesystem;
 using namespace sci;
 using namespace std;
-using namespace std::tr2::sys;
-
-
 
 bool ConvertScript(SCIVersion version, LangSyntax targetLanguage, ScriptId &scriptId, CompileLog &log, bool makeBak, GlobalCompiledScriptLookups *lookups)
 {
@@ -108,6 +107,7 @@ bool ConvertScript(SCIVersion version, LangSyntax targetLanguage, ScriptId &scri
 
 void EnumScriptIds(vector<ScriptId> &scripts, const std::string &folder, const std::string &fileExt)
 {
+    std::filesystem::
     path enumPath = path(folder);
     std::string searchString = "(\\w+)\\.";
     auto matchRSTRegex = std::regex(searchString + fileExt);

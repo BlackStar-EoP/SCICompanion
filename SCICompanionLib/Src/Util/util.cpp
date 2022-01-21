@@ -19,7 +19,6 @@
 #include "TlHelp32.h"
 #include <filesystem>
 
-using namespace std::tr2::sys;
 using namespace fmt;
 
 __declspec(dllexport) void _cdecl DummyFunctionSoWeBuildALib()
@@ -752,6 +751,7 @@ void ScriptId::_Init(PCTSTR pszFullFileName, WORD wScriptNum)
         //_strFileName = fullPath.filename();
         //_strFolder = fullPath.parent_path();
         // Sigh Microsoft... std::tr2::sys doesn't work with UNC shares...
+        // Sigh std::tr2 is a technical review and shouldn't have been used...
         CString str = pszFullFileName;
         int iIndexBS = str.ReverseFind('\\');
         _strFolder = str.Left(iIndexBS);

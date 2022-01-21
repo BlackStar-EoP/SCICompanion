@@ -18,6 +18,7 @@
 #include "Vocab000.h"
 #include "Vocab99x.h"
 #include "ScriptOMSmall.h"
+#include <functional>
 
 class ResourceEntity;
 class ILookupSaids;
@@ -392,7 +393,8 @@ private:
 };
 
 template<typename T>
-class GenericOutputByteCode2 : public std::unary_function<std::unique_ptr<T>, void>
+//class GenericOutputByteCode2 : public std::unary_function<std::unique_ptr<T>, void>
+class GenericOutputByteCode2
 {
 public:
 	GenericOutputByteCode2(CompileContext &context) : _context(context) {}
@@ -434,8 +436,8 @@ private:
 	CompileContext &_context;
 };
 
-
-class GenericOutputByteCode : public std::unary_function<IOutputByteCode*, void>
+//class GenericOutputByteCode : public std::unary_function<IOutputByteCode*, void>
+class GenericOutputByteCode
 {
 public:
     GenericOutputByteCode(CompileContext &context) : _context(context) {}
