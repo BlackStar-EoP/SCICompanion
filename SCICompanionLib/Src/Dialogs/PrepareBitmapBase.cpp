@@ -349,71 +349,73 @@ void PrepareBitmapBase::_OnPasteFromClipboard(CWnd *pwnd)
 
 void PrepareBitmapBase::_OnBrowse(CWnd *pwnd)
 {
-    CFileDialog dialog(TRUE, nullptr, nullptr, OFN_NOCHANGEDIR, g_szGdiplusFilter);
-    if (IDOK == dialog.DoModal())
-    {
-        CString strFileName = dialog.GetPathName();
-        unique_ptr<Gdiplus::Bitmap> pImage;
-        IStream *imageStream = nullptr;
+    // FIXME BITMAP? Really?
 
-        Gdiplus::Status status = Ok;
-
-        OSVERSIONINFO versionInfo = { 0 };
-        versionInfo.dwOSVersionInfoSize = sizeof(versionInfo);
-        GetVersionEx(&versionInfo);
-        if (versionInfo.dwMajorVersion >= 6)
-        {
-            std::ifstream is((PCSTR)strFileName, std::ifstream::binary);
-            if (is)
-            {
-                is.seekg(0, is.end);
-                size_t length = (size_t)is.tellg();
-                is.seekg(0, is.beg);
-                std::unique_ptr<char[]> buffer = std::make_unique<char[]>(length);
-                is.read(buffer.get(), length);
-                if (is)
-                {
-                    imageStream = SHCreateMemStream(static_cast<uint8_t*>(static_cast<void*>(buffer.get())), length);
-                    if (imageStream)
-                    {
-                        LARGE_INTEGER li = { 0 };
-                        imageStream->Seek(li, STREAM_SEEK_SET, nullptr);
-                        pImage.reset(Bitmap::FromStream(imageStream));
-                        status = pImage->GetLastStatus();
-                    }
-                }
-            }
-        }
-        else
-        {
-            // SHCreateMemStream is not exported by name from shlwapi, so just use Bitmap::FromFile,
-            // even though that will keep the file open as long as the image object exists.
-#ifdef UNICODE
-            unique_ptr<Gdiplus::Bitmap> pImage(Bitmap::FromFile(strFileName));
-#else
-            // GDI+ only deals with unicode.
-            int a = lstrlenA(strFileName);
-            BSTR unicodestr = SysAllocStringLen(nullptr, a);
-            MultiByteToWideChar(CP_ACP, 0, strFileName, a, unicodestr, a);
-            pImage.reset(Bitmap::FromFile(unicodestr, TRUE));
-            status = pImage->GetLastStatus();
-            //... when done, free the BSTR
-            SysFreeString(unicodestr);
-        }
-
-        if (pImage)
-        {
-            if (status != Gdiplus::Ok)
-            {
-                AfxMessageBox(fmt::format("Error opening {0}: {1}", (PCSTR)strFileName, GetGdiplusStatusString(status)).c_str(), MB_OK | MB_ICONERROR);
-            }
-
-            if (_Init(move(pImage), imageStream, pwnd))
-            {
-                _UpdateOrigBitmap(pwnd);
-            }
-        }
-#endif    
-
-    }
+//    CFileDialog dialog(TRUE, nullptr, nullptr, OFN_NOCHANGEDIR, g_szGdiplusFilter);
+//    if (IDOK == dialog.DoModal())
+//    {
+//        CString strFileName = dialog.GetPathName();
+//        unique_ptr<Gdiplus::Bitmap> pImage;
+//        IStream *imageStream = nullptr;
+//
+//        Gdiplus::Status status = Ok;
+//
+//        OSVERSIONINFO versionInfo = { 0 };
+//        versionInfo.dwOSVersionInfoSize = sizeof(versionInfo);
+//        GetVersionEx(&versionInfo);
+//        if (versionInfo.dwMajorVersion >= 6)
+//        {
+//            std::ifstream is((PCSTR)strFileName, std::ifstream::binary);
+//            if (is)
+//            {
+//                is.seekg(0, is.end);
+//                size_t length = (size_t)is.tellg();
+//                is.seekg(0, is.beg);
+//                std::unique_ptr<char[]> buffer = std::make_unique<char[]>(length);
+//                is.read(buffer.get(), length);
+//                if (is)
+//                {
+//                    imageStream = SHCreateMemStream(static_cast<uint8_t*>(static_cast<void*>(buffer.get())), length);
+//                    if (imageStream)
+//                    {
+//                        LARGE_INTEGER li = { 0 };
+//                        imageStream->Seek(li, STREAM_SEEK_SET, nullptr);
+//                        pImage.reset(Bitmap::FromStream(imageStream));
+//                        status = pImage->GetLastStatus();
+//                    }
+//                }
+//            }
+//        }
+//        else
+//        {
+//            // SHCreateMemStream is not exported by name from shlwapi, so just use Bitmap::FromFile,
+//            // even though that will keep the file open as long as the image object exists.
+//#ifdef UNICODE
+//            unique_ptr<Gdiplus::Bitmap> pImage(Bitmap::FromFile(strFileName));
+//#else
+//            // GDI+ only deals with unicode.
+//            int a = lstrlenA(strFileName);
+//            BSTR unicodestr = SysAllocStringLen(nullptr, a);
+//            MultiByteToWideChar(CP_ACP, 0, strFileName, a, unicodestr, a);
+//            pImage.reset(Bitmap::FromFile(unicodestr, TRUE));
+//            status = pImage->GetLastStatus();
+//            //... when done, free the BSTR
+//            SysFreeString(unicodestr);
+//        }
+//
+//        if (pImage)
+//        {
+//            if (status != Gdiplus::Ok)
+//            {
+//                AfxMessageBox(fmt::format("Error opening {0}: {1}", (PCSTR)strFileName, GetGdiplusStatusString(status)).c_str(), MB_OK | MB_ICONERROR);
+//            }
+//
+//            if (_Init(move(pImage), imageStream, pwnd))
+//            {
+//                _UpdateOrigBitmap(pwnd);
+//            }
+//        }
+//#endif    
+//
+//    }
 }

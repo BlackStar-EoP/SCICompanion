@@ -119,35 +119,39 @@ private:
 const sci::SyntaxNode *SyntaxContext::GetSyntaxNode(sci::NodeType type) const
 {
     sci::SyntaxNode *pNode = nullptr;
-    auto it = _statements._Get_container().rbegin();
-    while (it != _statements._Get_container().rend())
-    {
-        if (*it)
-        {
-            if (type == (*it)->GetNodeType())
-            {
-                pNode = (*it).get();
-                break;
-            }
-        }
-        ++it;
-    }
+
+    // FIXME possibly change container just making this compile for now
+    //auto it = _statements._Get_container().rbegin();
+    //while (it != _statements._Get_container().rend())
+    //{
+    //    if (*it)
+    //    {
+    //        if (type == (*it)->GetNodeType())
+    //        {
+    //            pNode = (*it).get();
+    //            break;
+    //        }
+    //    }
+    //    ++it;
+    //}
+
     return pNode;
 }
 
 sci::NodeType SyntaxContext::GetTopKnownNode() const
 {
     sci::NodeType type = sci::NodeTypeUnknown;
-    auto it = _statements._Get_container().rbegin();
-    while (it != _statements._Get_container().rend())
-    {
-        if (*it)
-        {
-            type =(*it)->GetNodeType();
-            break;
-        }
-        ++it;
-    }
+    // FIXME possibly change container just making this compile for now
+    //auto it = _statements._Get_container().rbegin();
+    //while (it != _statements._Get_container().rend())
+    //{
+    //    if (*it)
+    //    {
+    //        type =(*it)->GetNodeType();
+    //        break;
+    //    }
+    //    ++it;
+    //}
     return type;
 }
 

@@ -337,13 +337,14 @@ ResolvedToken CompileContext::LookupToken(const SyntaxNode *pNodeForError, const
     }
     else
     {
+        // FIXME
         // Go in reverse... more recent contexts are searched first.
-        auto index = _varContext._Get_container().rbegin();
-        while ((tokenType == ResolvedToken::Unknown) && (index != _varContext._Get_container().rend()))
-        {
-            tokenType = (*index)->LookupVariableName(*this, str, wIndex, dataType);
-            index++;   
-        }
+        //auto index = _varContext._Get_container().rbegin();
+        //while ((tokenType == ResolvedToken::Unknown) && (index != _varContext._Get_container().rend()))
+        //{
+        //    tokenType = (*index)->LookupVariableName(*this, str, wIndex, dataType);
+        //    index++;   
+        //}
 
         if (tokenType == ResolvedToken::Unknown)
         {

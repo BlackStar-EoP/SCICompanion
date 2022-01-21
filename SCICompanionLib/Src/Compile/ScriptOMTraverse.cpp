@@ -17,7 +17,8 @@
 using namespace sci;
 using namespace std;
 
-class PerformTraverse : public std::unary_function<SyntaxNode*, void>
+//class PerformTraverse : public std::unary_function<SyntaxNode*, void>
+class PerformTraverse
 {
 public:
     PerformTraverse(IExploreNode &en) : _en(en) {}
@@ -54,8 +55,8 @@ void ForwardTraverse2(const vector<unique_ptr<T>> &container, IExploreNode &en)
 	for_each(container.begin(), container.end(), PerformTraverse2<T>(en));
 }
 
-
-class PerformTraverse3 : public std::unary_function<SyntaxNode*, void>
+//class PerformTraverse3 : public std::unary_function<SyntaxNode*, void>
+class PerformTraverse3
 {
 public:
 	PerformTraverse3(IExploreNode &en) : _en(en) {}

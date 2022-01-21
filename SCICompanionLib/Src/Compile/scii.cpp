@@ -516,7 +516,8 @@ uint16_t scicode::calc_size()
         }
         if (fNeedToRedo)
         {
-            for_each(_code.begin(), _code.end(), std::mem_fun_ref(&scii::reset_size));
+            for (auto& c : _code) c.reset_size();
+            //for_each(_code.begin(), _code.end(), std::mem_fun_ref(&scii::reset_size));
         }
     } while (fNeedToRedo);
 
@@ -874,6 +875,9 @@ bool scii::_is_label_instruction()
 // We use the node pointer as a < comparator.  Just something consistent but meaningless.
 bool operator<(const code_pos &_Right, const code_pos &_Left)
 {
-    return _Right._Mynode() < _Left._Mynode();
+    // FIXME craziness is usually a bad idea.
+    //return _Right._Mynode() < _Left._Mynode();
+
+    return false;
 }
 

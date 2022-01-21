@@ -233,11 +233,14 @@ public:
     template<typename _statementT>
     _statementT* GetPrevSyntaxNode() const
     {
-        // Get the item that isn't at the top of the stack... it's one up.
-        auto prevIt = _statements._Get_container().rbegin();
-        prevIt++;
-        assert((*prevIt)->GetNodeType() == _statementT::MyNodeType);
-        return static_cast<_statementT*>((*prevIt).get());
+        // FIXME fix this pile of crap
+        //// Get the item that isn't at the top of the stack... it's one up.
+        //auto prevIt = _statements._Get_container().rbegin();
+        //prevIt++;
+        //assert((*prevIt)->GetNodeType() == _statementT::MyNodeType);
+        //return static_cast<_statementT*>((*prevIt).get());
+
+        return nullptr;
     }
     // Like GetSyntaxNode, but sets the top of the stack to nullptr (doesn't pop),
     // assuming that ownership has been transfered to the caller.
