@@ -557,10 +557,58 @@ HBITMAP _ScaleByHalf(uint8_t *pData, size16 sizeSource, int cx, int cy, const RG
 
 HBITMAP PicDrawManager::_GetBitmapGDIP(uint8_t *pData, int cx, int cy, const RGBQUAD *palette, int paletteCount) const
 {
+    printf("DANNY");
+
+
     size16 size = _GetPicSize();
     HBITMAP hbm = nullptr;
     SCIBitmapInfo bmi(size.cx, size.cy, palette, paletteCount);
     std::unique_ptr<Gdiplus::Bitmap> pimgVisual(Gdiplus::Bitmap::FromBITMAPINFO(&bmi, pData));
+
+
+    static uint32_t imagenr = 0;
+    char buffer[32];
+    sprintf_s(buffer, "TEST%u.PXT", imagenr++);
+    FILE* fp = nullptr;
+    fopen_s(&fp, buffer, "wb");
+    
+    for (int y = 0; y < size.cy; ++y)
+    {
+        for (int x = 0; x < size.cx; ++x)
+        {
+            RGBQUAD col = palette[pData[((size.cy - y - 1) * size.cx) + x]];
+            uint8_t r = col.rgbRed;
+            uint8_t g = col.rgbGreen;
+            uint8_t b = col.rgbBlue;
+            uint8_t a = 255;
+
+            fwrite(&b, 1, 1, fp);
+            fwrite(&g, 1, 1, fp);
+            fwrite(&r, 1, 1, fp);
+
+
+            fwrite(&a, 1, 1, fp);
+        }
+
+    }
+    
+    //for (int i = 0; i < (size.cx * size.cy); ++i)
+    //{
+    //    RGBQUAD col = palette[pData[index--]];
+    //    uint8_t r = col.rgbRed;
+    //    uint8_t g = col.rgbGreen;
+    //    uint8_t b = col.rgbBlue;
+    //    uint8_t a = 255;
+
+    //    fwrite(&b, 1, 1, fp);
+    //    fwrite(&g, 1, 1, fp);
+    //    fwrite(&r, 1, 1, fp);
+    //    
+    //    
+    //    fwrite(&a, 1, 1, fp);
+    //}
+    fclose(fp);
+
     if (pimgVisual)
     {
         if ((cx == size.cx) && (cy == size.cy))

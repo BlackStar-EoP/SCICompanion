@@ -180,6 +180,8 @@ void PicPreviewer::SetResource(const ResourceBlob &blob)
     m_wndControl.FromBitmap((HBITMAP)bitmapC, rc.Width(), rc.Height(), true);
     m_wndControl.ShowWindow(showControlSCreen);
     m_wndControlGroup.ShowWindow(showControlSCreen);
+
+
 }
 
 //
