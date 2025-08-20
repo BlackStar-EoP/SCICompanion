@@ -486,7 +486,7 @@ HRESULT CVocabView::_ParseViewString(PCTSTR pszString, CArray<CString, PCTSTR> &
 	HRESULT hr = E_OUTOFMEMORY;
 	size_t cch = lstrlen(pszString) + 2; // Make it double-null terminated.
 	PTSTR pszCopy = new TCHAR[cch];
-	if (pszCopy)
+	//if (pszCopy)
 	{
 		PTSTR pszDelete = pszCopy;
 		pszCopy[cch - 1] = 0;
@@ -500,14 +500,14 @@ HRESULT CVocabView::_ParseViewString(PCTSTR pszString, CArray<CString, PCTSTR> &
 			pszCopy = _SkipWhitespaceOrBar(pszCopy);
 			pszEnd = _FindWhitespaceOrBar(pszCopy);
 			*pszEnd = 0;
-			if (lstrlen(pszCopy) > 0)
+			if (pszCopy[0] != '\0')
 			{
 				words.Add(pszCopy);
 			}
 			pszCopy = pszEnd + 1;
 		} while (*pszCopy);
 
-		delete pszDelete;
+		delete[] pszDelete;
 	}
 	return hr;
 }
@@ -561,7 +561,7 @@ void CVocabView::OnFind()
 	if (_pFindDialog == NULL)
 	{
 		_pFindDialog = new CFindWordDialog();
-		if (_pFindDialog)
+		//if (_pFindDialog)
 		{
 			if (_pFindDialog->Create(TRUE, NULL, NULL, FR_DOWN, this))
 			{
@@ -653,7 +653,7 @@ void CVocabView::OnTimer(UINT_PTR nIDEvent)
 	// Timer ran out.
 	if (nIDEvent == TIMER_MATCHTEXT)
 	{
-		_strMatchText = TEXT("");
+		_strMatchText.Empty();
 	}
 	else
 	{

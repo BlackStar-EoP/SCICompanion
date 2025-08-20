@@ -492,6 +492,7 @@ public:
 	CPrecisionTimer() : elapsed(0), active(false)
   {
 	QueryPerformanceFrequency(&lFreq);
+	QueryPerformanceCounter(&lStart);
   }
 
   inline void Start()

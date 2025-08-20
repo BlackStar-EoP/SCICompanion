@@ -50,6 +50,7 @@ public:
 	CUndoResource()
 	{
 		_pos = _undo.end();
+		_pLastSaved = nullptr;
 	}
 
 	void AddFirstResource(std::unique_ptr<_TItem> pResource, ptrdiff_t extra = 0)
