@@ -125,7 +125,8 @@ void CVocabView::_ChangeView()
 
 std::string _GetGroupString(Vocab000::WordGroup dwGroup)
 {
-	return fmt::format("{0:4x}", (DWORD)dwGroup);
+	//return fmt::format("{0:4x}", (DWORD)dwGroup);
+	return fmt::format("{0}", (DWORD)dwGroup);
 }
 
 void CVocabView::_InsertItem(int iItem, Vocab000::WordGroup dwGroup, WordClass dwClass, const std::string &strWords)
