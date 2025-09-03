@@ -876,10 +876,19 @@ bool scii::_is_label_instruction()
 
 // This craziness is so that code_pos can be used in a multimap.
 // We use the node pointer as a < comparator.  Just something consistent but meaningless.
-bool operator<(const code_pos &_Right, const code_pos &_Left)
-{
-	// blackstar
-	// return _Right._Mynode() < _Left._Mynode();
 
-	return true;
+//typedef std::list<scii>::iterator code_pos;
+//bool operator<(const code_pos &_Right, const code_pos &_Left)
+//{
+//	return _Right._Mynode() < _Left._Mynode();
+//}
+/* blackstar suggestion: use something different than std::list */
+bool operator < (const code_pos& lhs, const code_pos& rhs)
+{
+	auto it = lhs;
+	while (it != rhs && it != std::list<scii>::iterator{})
+	{
+		++it;
+	}
+	return it == rhs;
 }
